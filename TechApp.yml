@@ -6,6 +6,7 @@
 Parameters: 
   UserPassword: 
     Type: String
+    NoEcho: true
     Description: Enter a password for the masteruser
 
 
@@ -17,7 +18,7 @@ Resources:
       BackupRetentionPeriod: 7
       CopyTagsToSnapshot: True
       DBInstanceClass: db.t2.micro
-      DBInstanceIdentifier: servianappdb
+      DBInstanceIdentifier: servianappdb2
       DBName: 'app'
       Engine: postgres
       EngineVersion: '12.3'
