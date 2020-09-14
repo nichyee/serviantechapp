@@ -44,7 +44,7 @@ Resources:
             sudo su -
 
             useradd service-user
-            echo ${UserPassword} | passwd service-user
+            echo ${UserPassword} | passwd --stdin service-user
             echo 'service-user   ALL=(ALL)  ALL' >> /etc/sudoers
             sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 
