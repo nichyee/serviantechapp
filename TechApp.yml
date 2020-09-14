@@ -42,5 +42,3 @@ Properties:
         cd /home/TechChallenge/
         yum install git -y
         git clone https://github.com/servian/TechChallengeApp.git
-  Volumes: 
-    - Volume
