@@ -24,3 +24,23 @@ Properties:
   PubliclyAccessible: True
   VPCSecurityGroups: 
     - dbaccess
+
+Type: AWS::EC2::Instance
+Properties: 
+  ImageId: 'ami-0810abbfb78d37cdf'
+  InstanceType: 't2.micro'
+  KeyName: servian-app-challenge
+  SecurityGroupIds: 
+    - sg-09ab03ff4eea2e604
+  SubnetId: subnet-a95be4f1
+  UserData:
+    Fn::Base64: 
+      !Sub |
+        #!/bin/bash -
+        yum update -y
+        mkdir /home/TechChallenge/
+        cd /home/TechChallenge/
+        yum install git -y
+        git clone https://github.com/servian/TechChallengeApp.git
+  Volumes: 
+    - Volume
