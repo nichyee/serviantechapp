@@ -1,4 +1,7 @@
 ---
+#Currently working on:
+  # 1. Update DNS to automatically point to new servers
+
 Parameters: 
   UserPassword: 
     Type: String
@@ -42,6 +45,7 @@ Resources:
             echo ${UserPassword} | passwd --stdin service-user
             echo 'service-user   ALL=(ALL)  ALL' >> /etc/sudoers
             sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+            service sshd restart
 
             yum update -y
             mkdir /home/TechChallenge/
@@ -57,4 +61,5 @@ Resources:
             sed -i 's/^"ListenHost" = "localhost"/"ListenHost" = "0.0.0.0"/g' /home/TechChallenge/TechChallengeApp/dist/conf.toml
             sed -i 's/^"ListenPort" = "3000"/"ListenPort" = "80"/g' /home/TechChallenge/TechChallengeApp/dist/conf.toml
             
-            reboot
+            ./TechChallengeApp updatedb
+            ./TechChallengeApp serve
