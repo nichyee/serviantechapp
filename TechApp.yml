@@ -41,10 +41,24 @@ Resources:
           !Sub |
             #!/bin/bash 
             sudo su -
+
             useradd service-user
             echo ${UserPassword} | passwd service-user
+            echo 'service-user   ALL=(ALL)  ALL' >> /etc/sudoers
+            sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+
             yum update -y
             mkdir /home/TechChallenge/
             cd /home/TechChallenge/
             yum install git -y
+            yum install go -y
             git clone https://github.com/servian/TechChallengeApp.git
+            cd TechChallengeApp
+            ./build.sh
+            cd dist/
+            sed -i 's/^"DbPassword" = "changeme"/"DbPassword" = "${UserPassword}"/g' /home/TechChallenge/TechChallengeApp/dist/conf.toml
+            sed -i 's/^"DbHost" = "localhost"/"DbHost" = "servianappdb.nicholasyee.net"/g' /home/TechChallenge/TechChallengeApp/dist/conf.toml
+            sed -i 's/^"ListenHost" = "localhost"/"ListenHost" = "0.0.0.0"/g' /home/TechChallenge/TechChallengeApp/dist/conf.toml
+            sed -i 's/^"ListenPort" = "3000"/"ListenPort" = "80"/g' /home/TechChallenge/TechChallengeApp/dist/conf.toml
+            
+            reboot
