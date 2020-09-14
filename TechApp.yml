@@ -1,0 +1,26 @@
+---
+
+#add RDS
+#add in EC2 - with cfn init run all commands
+
+Parameters: 
+  UserPassword: 
+    Type: String
+    Description: Enter a password for the masteruser
+
+
+Type: AWS::RDS::DBInstance
+Properties: 
+  BackupRetentionPeriod: 7
+  CopyTagsToSnapshot: True
+  DBInstanceClass: db.t2.micro
+  DBInstanceIdentifier: servianappdb
+  DBName: 'app'
+  Engine: postgres
+  EngineVersion: '12.3'
+  MasterUsername: 'postgres'
+  MasterUserPassword: !Ref UserPassword
+  MultiAZ: True
+  PubliclyAccessible: True
+  VPCSecurityGroups: 
+    - dbaccess
